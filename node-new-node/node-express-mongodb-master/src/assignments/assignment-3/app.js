@@ -1,14 +1,11 @@
-//bring in express
-const express = require('express');
-const path = require('path');
-const mongoose = require('mongoose');
-//require dotenv
 const dotenv = require('dotenv');
 //envoke dotenv
 dotenv.config();
 
-//add defRouter model
-const router = require('./routes/users');
+const express = require('express');
+const path = require('path');
+const mongoose = require('mongoose');
+
 
 //boot express
 const app = express();
@@ -17,7 +14,7 @@ app.set('view engine','ejs');
 app.use(express.urlencoded({extended: true}));
 
 
-//need the mongoose code higher up, it is used to connect to db
+//need the mongoose code higher up, it is used to connect to db (works!)
 mongoose.connect(process.env.DB_CONNECTION, { useUnifiedTopology: true,useNewUrlParser: true });
 
 const db = mongoose.connection;
@@ -28,19 +25,112 @@ db.once('open', function() {
 });
 
 
-//set default route to homepage, after connected to db
 app.get('/', function(request, response){
-  response.render('users');
+  response.render('./index');
+  console.log("got home users")
 })
 
 
-//add user route (app.use because using router: next set homepoint and boot our route);
-app.use('/users', router)
+app.post('/signup', function(req,res){ 
+  var name = req.body.name; 
+  var email =req.body.email; 
+
+  const userdata = { 
+      "name": name, 
+      "email": email
+  } 
+
+db.collection('details').insertOne(userdata, (err, collection) => { 
+      if (err) throw err; 
+      console.log("Record inserted Successfully"); 
+            
+  }); 
+        
+  return res.redirect('/signup_success'); 
+}) 
+
+
+app.get('/',function(req,res){ 
+res.set({ 
+  'Access-control-Allow-Origin': '*'
+  }); 
+return res.redirect('index'); 
+})
+
+
+
+
+
+
+
+
+
+
+//set default route to homepage, after connected to db (works!)
+// app.get('/', function(request, response){
+//   response.render('./index');
+//   console.log("got home users")
+// })
+
+//This will take an object: for each will take another embedded object (object of objects)
+//defines what data is going to look like
+// const userSchema = new mongoose.Schema(
+//   {
+//     name: {
+//       type: String,
+//       required: true
+//     },
+//     email: {
+//       type: String,
+//       require: true
+//     },
+//     adult: {
+//       type: Boolean,
+//       default: false
+
+//     }
+//   }
+// );
+
+//compile model
+//mongoose will look for Users on database
+
+
+
+// app.get('/', (request, response) => {
+//   console.log('Get /')
+//   //repeating async code
+//   User.find({}, (err, users) => {
+//     response.render('users',{users: users})
+//     console.log(`Mongoose connection open on ${process.env.DATABASE}`);
+//   })
+// })
+  
+
+//if resolved or rejected, mongoose will handle error because it returns a promise
+
+// app.get('/', function(request, response){
+//   console.log('GET /users/new');
+//   response.render('index', {});
+// })
+
+// POST /users (works but doesnt post)
+// app.post('/', function(req, res){
+//   const postData = new userSchema(req.body);
+//   console.log('POST /users');
+//   postData.save().then( res => {
+//     res.redirect('/');
+// }).catch(err => {
+//     res.status(400).send("Unable to save data");
+// });
+// });
+
+
 
 // static assets
 app.use(express.static(path.join(__dirname, 'public')));
 
-//catch all 404 errors
+//catch all 404 errors (works!)
 app.use(function(req, res, next) {
   res.status(404);
   res.send('404: File Not Found');
