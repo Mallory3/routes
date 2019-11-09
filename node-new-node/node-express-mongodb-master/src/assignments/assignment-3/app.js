@@ -9,10 +9,6 @@ const mongoose = require('mongoose');
 
 //boot express
 const app = express();
-app.set('view engine','ejs');
-//include if accepting post data in your app
-app.use(express.urlencoded({extended: true}));
-
 
 //need the mongoose code higher up, it is used to connect to db (works!)
 mongoose.connect(process.env.DB_CONNECTION, { useUnifiedTopology: true,useNewUrlParser: true });
@@ -24,38 +20,46 @@ db.once('open', function() {
   console.log('DB Connected!!!');
 });
 
+//EJS
+app.set('view engine','ejs');
+//include if accepting post data in your app
+app.use(express.urlencoded({extended: true}));
 
-app.get('/', function(request, response){
-  response.render('./index');
-  console.log("got home users")
-})
+// Routes
+app.use('/', require('./routes/index'));
 
 
-app.post('/signup', function(req,res){ 
-  var name = req.body.name; 
-  var email =req.body.email; 
+// app.get('/', function(request, response){
+//   response.render('./index');
+//   console.log("got home users")
+// })
 
-  const userdata = { 
-      "name": name, 
-      "email": email
-  } 
 
-db.collection('details').insertOne(userdata, (err, collection) => { 
-      if (err) throw err; 
-      console.log("Record inserted Successfully"); 
+// app.post('/signup', function(req,res){ 
+//   const name = req.body.name; 
+//   const email =req.body.email; 
+
+//   const userdata = { 
+//       "name": name, 
+//       "email": email
+//   } 
+
+// db.collection('details').insertOne(userdata, (err, collection) => { 
+//       if (err) throw err; 
+//       console.log("Record inserted Successfully"); 
             
-  }); 
+//   }); 
         
-  return res.redirect('/signup_success'); 
-}) 
+//   return res.redirect('/signup_success'); 
+// }) 
 
 
-app.get('/',function(req,res){ 
-res.set({ 
-  'Access-control-Allow-Origin': '*'
-  }); 
-return res.redirect('index'); 
-})
+// app.get('/',function(req,res){ 
+// res.set({ 
+//   'Access-control-Allow-Origin': '*'
+//   }); 
+// return res.redirect('index'); 
+// })
 
 
 

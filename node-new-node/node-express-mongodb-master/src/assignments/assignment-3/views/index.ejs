@@ -10,7 +10,7 @@
 <body>
   <h1>homepage</h1>
 
-  <form action="/signup" method="post" autocomplete="on">
+  <form id= "form" action="/" method="post" autocomplete="on">
     <fieldset>
       <legend>Join Our Mailing List</legend>
       <label>Name:<span>*</span><br>
@@ -18,9 +18,36 @@
       <label>Email<span>*</span><br>
       <input type="email" name="email" placeholder="johnshepp@email.com" required></label><br>
       <input type="checkbox" name="adult" value="adult"> I am over 18<br>
-      <input id="submit" type="submit" value="Register">
+      <input id="submit" type="submit" value="submit" onclick="updatehtml()" >
     </fieldset>
   </form>
-  <a href="contact">Contact</a>
+  <div id="display">Subscribe to my Newsletter</div>
+  <div id="demo"></div>
 </body>
+<script>
+document.getElementById("submit").onclick = function() {
+  const displayname = document.getElementById("name").value;
+  alert("Thankyou " + displayname)
+  window.location.href = "/";
+};
+
+const button = document.querySelector('#submit');
+const paragraph = document.querySelector('#display');
+const displayname = document.getElementById("name").value;
+
+button.addEventListener('click', updatehtml);
+
+function updatehtml() {
+  if (button.value === 'submit') {
+    button.value = 'Thankyou';
+    paragraph.textContent = "Thankyou for subscribing to my Newsletter!" + displayname + "You will be redirected to the homepage in 10 seconds. If not redirected, click the link below.";
+  document.getElementById("demo").innerHTML = displayname;
+  }
+  setTimeout(function () {
+   window.location.href= '/success';
+}, 10000);
+}
+</script>
+
+
 </html>

@@ -13,12 +13,12 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      require: true
+      required: true
     },
     adult: {
       type: Boolean,
+      required: true,
       default: false
-
     }
   }
 );
