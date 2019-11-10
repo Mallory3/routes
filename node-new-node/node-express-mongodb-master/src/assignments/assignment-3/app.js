@@ -29,105 +29,54 @@ app.use(express.urlencoded({extended: true}));
 app.use('/', require('./routes/index'));
 
 
-// app.get('/', function(request, response){
-//   response.render('./index');
-//   console.log("got home users")
-// })
 
 
-// app.post('/signup', function(req,res){ 
-//   const name = req.body.name; 
-//   const email =req.body.email; 
+//article code
+// const MongoClient = require('mongodb').MongoClient;
+// require('dotenv').config();
 
-//   const userdata = { 
-//       "name": name, 
-//       "email": email
-//   } 
+// const articles = require('./fixtures/articles');
+// const users = require('./fixtures/users');
 
-// db.collection('details').insertOne(userdata, (err, collection) => { 
-//       if (err) throw err; 
-//       console.log("Record inserted Successfully"); 
-            
-//   }); 
-        
-//   return res.redirect('/signup_success'); 
-// }) 
+// const uri = process.env.DB_CONNECTION;
+// MongoClient.connect(uri,{ useUnifiedTopology: true,useNewUrlParser: true }, function(err, client) {
+//    if(err) {
+//       console.log('Error occurred while connecting to MongoDB Atlas...\n',err);
+//    }
+//    console.log('Connected...');
+//    // perform actions on the collection object
 
+//    const db = client.db("final-project");
 
-// app.get('/',function(req,res){ 
-// res.set({ 
-//   'Access-control-Allow-Origin': '*'
-//   }); 
-// return res.redirect('index'); 
-// })
+//    const artCol = db.collection('articles');
 
-
-
-
-
-
-
-
-
-
-//set default route to homepage, after connected to db (works!)
-// app.get('/', function(request, response){
-//   response.render('./index');
-//   console.log("got home users")
-// })
-
-//This will take an object: for each will take another embedded object (object of objects)
-//defines what data is going to look like
-// const userSchema = new mongoose.Schema(
-//   {
-//     name: {
-//       type: String,
-//       required: true
-//     },
-//     email: {
-//       type: String,
-//       require: true
-//     },
-//     adult: {
-//       type: Boolean,
-//       default: false
-
+//    artCol.drop();
+//    artCol.insertMany(articles, function(err, cursor) {
+//     if (err) {
+//       console.log('There was a problem');
 //     }
-//   }
-// );
+//     console.log(cursor.insertedCount);
+//   });
 
-//compile model
-//mongoose will look for Users on database
+//   const userCol = db.collection('users');
 
+//   userCol.drop();
+//   userCol.insertMany(users, function(err, cursor) {
+//    if (err) {
+//      console.log('There was a problem');
+//    }
+//    console.log(cursor.insertedCount);
+//  });
 
-
-// app.get('/', (request, response) => {
-//   console.log('Get /')
-//   //repeating async code
-//   User.find({}, (err, users) => {
-//     response.render('users',{users: users})
-//     console.log(`Mongoose connection open on ${process.env.DATABASE}`);
-//   })
-// })
-  
-
-//if resolved or rejected, mongoose will handle error because it returns a promise
-
-// app.get('/', function(request, response){
-//   console.log('GET /users/new');
-//   response.render('index', {});
-// })
-
-// POST /users (works but doesnt post)
-// app.post('/', function(req, res){
-//   const postData = new userSchema(req.body);
-//   console.log('POST /users');
-//   postData.save().then( res => {
-//     res.redirect('/');
-// }).catch(err => {
-//     res.status(400).send("Unable to save data");
+//   client.close();
 // });
-// });
+
+
+
+
+
+
+
 
 
 
