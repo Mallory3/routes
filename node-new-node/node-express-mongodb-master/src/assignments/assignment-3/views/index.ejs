@@ -25,7 +25,6 @@
 </body>
 <script>
 document.getElementById("submit").onclick = function() {
-  let errors = []
   const displayname = document.getElementById("name").value;
   const displayemail = document.getElementById("email").value;
   if (!displayname || !displayemail) {
@@ -58,6 +57,7 @@ function updatehtml() {
   }
   setTimeout(function () {
    window.location.href= '/success';
+   updatehtml
 }, 10000);
 
 }
