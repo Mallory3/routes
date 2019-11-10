@@ -81,7 +81,7 @@ app.use('/', require('./routes/index'));
 
 
 // static assets
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'assets')));
 
 //catch all 404 errors (works!)
 app.use(function(req, res, next) {
