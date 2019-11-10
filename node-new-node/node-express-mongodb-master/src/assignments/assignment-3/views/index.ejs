@@ -14,9 +14,9 @@
     <fieldset>
       <legend>Subscribe to my Newsletter</legend>
       <label>Name:<span>*</span><br>
-      <input id="name" type="text" name="name" placeholder="John Shepp"></label><br>
+      <input id="name" type="text" name="name" placeholder="John Shepp" required ="true"></label><br>
       <label>Email<span>*</span><br>
-      <input type="email" name="email" placeholder="johnshepp@email.com" required></label><br>
+      <input id="email"type="email" name="email" placeholder="johnshepp@email.com" required="true"></label><br>
       <input type="checkbox" name="adult" value="adult"> I am over 18<br>
       <input id="submit" type="submit" value="submit" onclick="updatehtml()" >
     </fieldset>
@@ -25,9 +25,18 @@
 </body>
 <script>
 document.getElementById("submit").onclick = function() {
+  let errors = []
   const displayname = document.getElementById("name").value;
-  alert("Thankyou " + displayname)
+  const displayemail = document.getElementById("email").value;
+  if (!displayname || !displayemail) {
+    alert("Please complete all required fields")
+    window.location.href = "/";
+  } else {
+  alert("Thankyou " + displayname 
+  + " please check " + displayemail 
+  + " for your newsletter!")
   window.location.href = "/";
+  }
 };
 
 const button = document.querySelector('#submit');
@@ -39,19 +48,18 @@ button.addEventListener('click', updatehtml);
 function updatehtml() {
   if (button.value === 'submit') {
     form.style.display ="none";
-    paragraph.textContent = "Thankyou for subscribing to my Newsletter! You will be redirected to the homepage in 10 seconds. Otherwise, click the link below to return home.";
+    const displayname = document.getElementById("name").value;
+    const displayemail = document.getElementById("email").value;
+    paragraph.textContent = "Thankyou for subscribing to my newsletter " + displayname + "! Your first newsletter will be emailed to " + displayemail + " You will be redirected to the homepage in 10 seconds. Otherwise, click the link below to return home.";
     const homeButton = document.createElement('button')
     homeButton.innerHTML = "Return Home"
     homeButton.setAttribute('onclick', "location.href='/success'")
     document.body.appendChild(homeButton)
-    // const locateHomeLink = document.querySelector("button")
-    // const homeLink = document.createElement('a')
-    // homeLink.setAttribute('href', '/success')
-    // locateHomeLink.appendChild(homeLink)
   }
   setTimeout(function () {
    window.location.href= '/success';
 }, 10000);
+
 }
 </script>
 

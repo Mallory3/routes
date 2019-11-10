@@ -27,6 +27,10 @@ router.post('/', (req, res) => {
   const name = req.body.name; 
   const email =req.body.email; 
   const adult = Boolean(req.body.adult)
+  
+  
+  
+  
   const newUser = new User({
     name,
     email,
