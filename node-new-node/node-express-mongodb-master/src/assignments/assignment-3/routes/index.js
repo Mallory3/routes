@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
     adult
   });
 
-  db.collection('details').insertOne(newUser, (err, collection) => { 
+  db.collection('subscribers').insertOne(newUser, (err, collection) => { 
     if (err) throw err; 
     console.log("Record inserted Successfully"); 
   })

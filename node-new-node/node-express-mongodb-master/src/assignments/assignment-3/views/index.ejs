@@ -12,7 +12,7 @@
 
   <form id= "form" action="/" method="post" autocomplete="on">
     <fieldset>
-      <legend>Join Our Mailing List</legend>
+      <legend>Subscribe to my Newsletter</legend>
       <label>Name:<span>*</span><br>
       <input id="name" type="text" name="name" placeholder="John Shepp"></label><br>
       <label>Email<span>*</span><br>
@@ -22,7 +22,6 @@
     </fieldset>
   </form>
   <div id="display">Subscribe to my Newsletter</div>
-  <div id="demo"></div>
 </body>
 <script>
 document.getElementById("submit").onclick = function() {
@@ -39,9 +38,16 @@ button.addEventListener('click', updatehtml);
 
 function updatehtml() {
   if (button.value === 'submit') {
-    button.value = 'Thankyou';
-    paragraph.textContent = "Thankyou for subscribing to my Newsletter!" + displayname + "You will be redirected to the homepage in 10 seconds. If not redirected, click the link below.";
-  document.getElementById("demo").innerHTML = displayname;
+    form.style.display ="none";
+    paragraph.textContent = "Thankyou for subscribing to my Newsletter! You will be redirected to the homepage in 10 seconds. Otherwise, click the link below to return home.";
+    const homeButton = document.createElement('button')
+    homeButton.innerHTML = "Return Home"
+    homeButton.setAttribute('onclick', "location.href='/success'")
+    document.body.appendChild(homeButton)
+    // const locateHomeLink = document.querySelector("button")
+    // const homeLink = document.createElement('a')
+    // homeLink.setAttribute('href', '/success')
+    // locateHomeLink.appendChild(homeLink)
   }
   setTimeout(function () {
    window.location.href= '/success';
